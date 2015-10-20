@@ -8,7 +8,7 @@ def wordpattern(pattern, input)
   input_count = input_parts.count
   if (input_count % pattern_count) == 0
       pattern_map = {}
-    pattern_parts.each {|i|
+      pattern_parts.each {|i|
       pattern_map[i] ||= 0
       pattern_map[i] += 1
     }
@@ -62,14 +62,28 @@ def wordpattern(pattern, input)
   end
 end
 
-a = wordpattern("abba", "foobarbarfoo")
+fp = File.open("/Users/compwron/repositories/br/test_cases_omjs2ksa/", 'w')
+
+
+_pattern = gets.strip;
+
+
+_input = gets.strip;
+
+res = wordpattern(_pattern, _input);
+fp.write res;
+fp.write "\n"
+
+fp.close()
+
+a = wordpattern("abba", "redbluebluered")
 p a == 1
 p a
 
-b = wordpattern("abba", "foobarbarfoobaz")
+b = wordpattern("abcdb", "tobeornottobe")
 p b == 0
 p b
 
-c = wordpattern("abba", "aaaabbbb")
+c = wordpattern("abcdeeeee", "onetwothreefourcowcowcowcowcow")
 p c == 0
 p c
