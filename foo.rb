@@ -62,19 +62,25 @@ def wordpattern(pattern, input)
   end
 end
 
-fp = File.open("/Users/compwron/repositories/br/test_cases_omjs2ksa/", 'w')
+files = Dir.glob("test_cases_omjs2ksa/input*")
+p files
+files.each do |f|
+  p f
+  fp = File.open(f, 'w')
 
+  _pattern = gets.strip;
+  p _pattern
+  _input = gets.strip;
+  p _input
+  fp.close()
 
-_pattern = gets.strip;
-
-
-_input = gets.strip;
-
-res = wordpattern(_pattern, _input);
-fp.write res;
-fp.write "\n"
-
-fp.close()
+  res = wordpattern(_pattern, _input);
+  output_file = f.name.gsub('input', 'output')
+  ofp = File.open(output_file, 'w')
+  ofp.write res;
+  ofp.write "\n"
+  fp.close()
+end
 
 a = wordpattern("abba", "redbluebluered")
 p a == 1
