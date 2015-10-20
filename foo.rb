@@ -1,5 +1,6 @@
 require 'pry'
 def wordpattern(pattern, input)
+  # binding.pry
   pattern_parts = pattern.split('')
   pattern_count = pattern_parts.count
 
@@ -63,22 +64,17 @@ def wordpattern(pattern, input)
 end
 
 files = Dir.glob("test_cases_omjs2ksa/input*")
-p files
 files.each do |f|
-  p f
-  fp = File.open(f, 'w')
-
-  _pattern = gets.strip;
-  p _pattern
-  _input = gets.strip;
-  p _input
-  fp.close()
+  fp = File.open(f, 'r')
+  lines = fp.readlines
+  _pattern = lines[0].strip
+  _input = lines[1]
 
   res = wordpattern(_pattern, _input);
-  output_file = f.name.gsub('input', 'output')
+
+  output_file = f.gsub('input', 'output')
   ofp = File.open(output_file, 'w')
-  ofp.write res;
-  ofp.write "\n"
+  ofp.write res
   fp.close()
 end
 
@@ -86,10 +82,10 @@ a = wordpattern("abba", "redbluebluered")
 p a == 1
 p a
 
-b = wordpattern("abcdb", "tobeornottobe")
-p b == 0
+b = wordpattern("abcdab", "tobeornottobe")
+p b == 1
 p b
 
-c = wordpattern("abcdeeeee", "onetwothreefourcowcowcowcowcow")
+c = wordpattern("abcdb", "tobeornottobe")
 p c == 0
 p c
