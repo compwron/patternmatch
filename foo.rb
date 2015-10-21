@@ -9,50 +9,57 @@ def wordpattern(pattern, input)
   pattern_parts = pattern.split('')
   pattern_count = pattern_parts.count
 
-
   input_parts = input.split('')
   input_count = input_parts.count
-  if (contains_repeated_substrings?(input)) == 0
 
-    pattern_parts.each_with_index {|i, index_i|
-      pattern_parts.each_with_index {|j, index_j|
-
-        if pattern_parts[index_i] == pattern_parts[index_j]
-          if input_chunks[index_i] == input_chunks[index_j]
-            # p "YES; keep going"
-          else
-            # p "NOOOO"
-            return 0
+    pattern_parts.each_with_index do |i, index_i|
+      pattern_parts.each_with_index do |j, index_j|
+        all_possible_next_chunks(input_parts).each do |arr|
+          all_matches = arr.each_with_index.map do |arr_element, arr_index|
+            if pattern_parts[index_i] == pattern_parts[index_j]
+              if arr[index_j] == arr[index_j]
+                true
+              else
+                false
+              end
+            else
+              if arr[index_j] == arr[index_j]
+                false
+              else
+                true
+              end
+            end
           end
-        else
-          if input_chunks[index_i] == input_chunks[index_j]
-            # p "NOOOO, should not match"
-            return 0
-          else
-            # p "inequality sounds good, keep going"
+
+          if all_matches.all?
+            return 1
           end
         end
-      }
-    }
-    1
+      end
+    end
+    0
   else
     0
   end
 end
 
-def all_possible_next_chunks(remaining_length, remaining_chars, possible_chunks=[])
+def all_possible_next_chunks(remaining_length, remaining_chars=remaining_length, possible_chunks=[])
   # possible_chunks = [[aa, bb], [a, abb], [a, ab, b]]
   if remaining_length == 0
     return possible_chunks
   else
     1.upto(remaining_length).each { |length|
-      possible_chunks.each { |pc|
-        pc
-      }
-      remaining_length = input_count - length
 
     }
   end
+end
+
+def split_word s
+  (0..s.length).inject([]){|ai,i|
+    (1..s.length - i).inject(ai){|aj,j|
+      aj << s[i,j]
+    }
+  }.uniq
 end
 
 files = Dir.glob("test_cases_omjs2ksa/input*")
